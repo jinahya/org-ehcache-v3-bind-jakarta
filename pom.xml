@@ -45,26 +45,17 @@
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
     <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
-    <version.jakarta.activation>1.2.1</version.jakarta.activation>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-javadoc-plugin>3.1.0</version.maven-javadoc-plugin>
     <version.maven-surefire>2.22.2</version.maven-surefire>
-    <version.org.glassfish.jaxb>2.3.2</version.org.glassfish.jaxb>
     <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
-    <version.org.mockito>4.1.0</version.org.mockito>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-text</artifactId>
-      <version>1.9</version>
+      <version>1.2.7</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -85,45 +76,22 @@
       <version>${version.org.junit.jupiter}</version>
       <scope>test</scope>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>org.mockito</groupId>-->
-    <!--      <artifactId>mockito-core</artifactId>-->
-    <!--      <version>${version.org.mockito}</version>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-      <version>${version.org.mockito}</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion> <!-- dependencyConvergence -->
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.22</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-      <version>${version.org.glassfish.jaxb}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.activation</groupId>
-      <artifactId>jakarta.activation</artifactId>
-      <version>${version.jakarta.activation}</version>
-    </dependency>
   </dependencies>
 
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-xjc-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
@@ -163,10 +131,9 @@
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-xjc-plugin</artifactId>
-        <version>3.3.1</version>
         <configuration>
           <!--          <extensions>-->
-          <!--            <extension>org.apache.cxf.xjcplugins:cxf-xjc-dv:3.3.1</extension>-->
+          <!--            <extension>org.apache.cxf.xjcplugins:cxf-xjc-dv:2.2.12</extension>-->
           <!--          </extensions>-->
         </configuration>
         <executions>
@@ -181,37 +148,7 @@
               <xsdOptions>
                 <xsdOption>
                   <xsd>${basedir}/src/main/xsd/ehcache-core-3.0.xsd</xsd>
-                  <!--                  <bindingFile>classpath:/schemas/wsdl/http.xjb</bindingFile>-->
-                  <!--                  <catalog>${basedir}/src/main/build-resources/catalog.cat</catalog>-->
                 </xsdOption>
-                <!--                <xsdOption>-->
-                <!--                  <xsd>classpath:/schemas/wsdl/ws-addr.xsd</xsd>-->
-                <!--                  <packagename>org.apache.cxf.ws.addressing</packagename>-->
-                <!--                </xsdOption>-->
-                <!--                <xsdOption>-->
-                <!--                  <xsd>classpath:/schemas/wsdl/addressing.xsd</xsd>-->
-                <!--                  <bindingFile>classpath:/schemas/wsdl/addressing.xjb</bindingFile>-->
-                <!--                </xsdOption>-->
-                <!--                <xsdOption>-->
-                <!--                  <xsd>classpath:/schemas/configuration/security.xsd</xsd>-->
-                <!--                  <bindingFiles>-->
-                <!--                    <bindingFile>classpath:/schemas/configuration/security.xjb</bindingFile>-->
-                <!--                    <bindingFile>classpath:/schemas/configuration/security2.xjb</bindingFile>-->
-                <!--                  </bindingFiles>-->
-                <!--                  <catalog>${basedir}/src/main/build-resources/catalog.cat</catalog>-->
-                <!--                  <extensionArgs>-->
-                <!--                    <extensionArg>-Xdv</extensionArg>-->
-                <!--                  </extensionArgs>-->
-                <!--                </xsdOption>-->
-                <!--                <xsdOption>-->
-                <!--                  <xsd>classpath:/schemas/wsdl/ws-addr-wsdl.xsd</xsd>-->
-                <!--                  <bindingFile>classpath:/schemas/wsdl/ws-addr-wsdl.xjb</bindingFile>-->
-                <!--                  <extension>true</extension>-->
-                <!--                </xsdOption>-->
-                <!--                <xsdOption>-->
-                <!--                  <xsd>classpath:/schemas/wsdl/addressing200403.xsd</xsd>-->
-                <!--                  <bindingFile>classpath:/schemas/wsdl/addressing200403.xjb</bindingFile>-->
-                <!--                </xsdOption>-->
               </xsdOptions>
             </configuration>
           </execution>
@@ -250,19 +187,6 @@
             <arg>-Xlint</arg>
           </compilerArgs>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${version.maven-failsafe}</version>
-        <executions>
-          <execution>
-            <goals>
-              <!--              <goal>integration-test</goal>-->
-              <!--              <goal>verify</goal>-->
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -374,9 +298,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.12.0</version>
+        <version>3.15.0</version>
         <configuration>
-          <targetJdk>1.6</targetJdk>
+          <targetJdk>${maven.compiler.source}</targetJdk>
           <skipEmptyReport>false</skipEmptyReport> <!-- https://issues.apache.org/jira/browse/MPMD-225 -->
         </configuration>
       </plugin>
@@ -409,54 +333,53 @@
 
   <profiles>
     <profile>
-      <id>umlgraph</id>
+      <id>failsafe</id>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <version>${version.maven-javadoc-plugin}</version>
-              <configuration>
-                <doclint>all</doclint>
-                <additionalOptions>
-                  <additionalOption>-all</additionalOption>
-                  <additionalOption>-collapsible</additionalOption>
-                  <additionalOption>-hide java.*</additionalOption>
-                  <additionalOption>-hide javax.*</additionalOption>
-                  <additionalOption>-horizontal</additionalOption>
-                  <additionalOption>-inferdep</additionalOption>
-                  <additionalOption>-inferdepinpackage</additionalOption>
-                  <additionalOption>-inferrel</additionalOption>
-                  <additionalOption>-outputencoding ${project.reporting.outputEncoding}</additionalOption>
-                </additionalOptions>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${version.maven-failsafe}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
-    <profile> <!-- just for IntelliJ IDEA -->
-      <id>1.8</id>
-      <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-      </properties>
-    </profile>
-    <profile> <!-- just for IntelliJ IDEA -->
-      <id>jab2-maven-plugin</id>
+    <profile>
+      <id>javax</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
+<!--        <version.jakarta.activation>1.2.1</version.jakarta.activation>-->
+        <version.org.glassfish.jaxb>2.3.2</version.org.glassfish.jaxb>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.glassfish.jaxb</groupId>
+          <artifactId>jaxb-runtime</artifactId>
+          <version>${version.org.glassfish.jaxb}</version>
+          <scope>provided</scope>
+        </dependency>
+<!--        <dependency>-->
+<!--          <groupId>com.sun.activation</groupId>-->
+<!--          <artifactId>jakarta.activation</artifactId>-->
+<!--          <version>${version.jakarta.activation}</version>-->
+<!--        </dependency>-->
+      </dependencies>
       <build>
         <plugins>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>jaxb2-maven-plugin</artifactId>
             <configuration>
-              <skip>true</skip>
               <xjcSourceExcludeFilters>
                 <filter implementation="org.codehaus.mojo.jaxb2.shared.filters.pattern.PatternFileFilter">
                   <patterns>
@@ -472,11 +395,11 @@
                 <artifactId>jaxb-xjc</artifactId>
                 <version>${version.org.glassfish.jaxb}</version>
               </dependency>
-              <dependency>
-                <groupId>com.sun.activation</groupId>
-                <artifactId>jakarta.activation</artifactId>
-                <version>${version.jakarta.activation}</version>
-              </dependency>
+<!--              <dependency>-->
+<!--                <groupId>com.sun.activation</groupId>-->
+<!--                <artifactId>jakarta.activation</artifactId>-->
+<!--                <version>${version.jakarta.activation}</version>-->
+<!--              </dependency>-->
             </dependencies>
             <executions>
               <execution>
@@ -489,6 +412,23 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>jakarta</id>
+      <properties>
+        <version.com.sun.xml.bind>3.0.2</version.com.sun.xml.bind>
+        <version.jakarta.xml.bind>3.0.0</version.jakarta.xml.bind>
+        <version.org.glassfish.jaxb>3.0.2</version.org.glassfish.jaxb>
+      </properties>
+    </profile>
+    <profile>
+      <id>jab2-maven-plugin</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+      </properties>
     </profile>
   </profiles>
 </project>
